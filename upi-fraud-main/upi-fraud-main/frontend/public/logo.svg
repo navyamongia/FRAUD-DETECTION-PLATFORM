@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="UPI Fraud Alert logo">
+  <path d="M24 3.5 7.5 9.8v11.6c0 10.1 6.8 19 16.5 22.7 9.7-3.7 16.5-12.6 16.5-22.7V9.8L24 3.5Z" fill="#1B7B96"/>
+  <path d="M24 3.5v40.6C14.3 40.4 7.5 31.5 7.5 21.4V9.8L24 3.5Z" fill="#14627A"/>
+  <g stroke="#fff" stroke-width="2" stroke-linecap="round">
+    <path d="M24 17 16 29M24 17l8 12M16 29h16"/>
+  </g>
+  <circle cx="24" cy="17" r="4.2" fill="#fff"/>
+  <circle cx="16" cy="29" r="3.4" fill="#fff"/>
+  <circle cx="32" cy="29" r="3.4" fill="#fff"/>
+  <circle cx="24" cy="17" r="7.4" fill="none" stroke="#ACDAFB" stroke-width="1.6"/>
+</svg>

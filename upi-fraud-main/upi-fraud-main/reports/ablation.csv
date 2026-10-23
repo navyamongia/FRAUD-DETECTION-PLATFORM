@@ -1,0 +1,4 @@
+model,PR_AUC,ROC_AUC,recall@0.1%FPR,recall@0.5%FPR,precision@0.5%FPR,actual_FPR@0.5%,recall@1%FPR
+A_behavioural,0.8186,0.9952,0.7596,0.8955,0.3695,0.0078,0.9251
+B_plus_graph,0.9677,0.9984,0.9564,0.9756,0.41,0.0072,0.9826
+C_plus_known_mules,0.9751,0.9964,0.9686,0.9774,0.4244,0.0068,0.9826

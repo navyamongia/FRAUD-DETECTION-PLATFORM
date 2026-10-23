@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Payment terminal</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; cursor: none; user-select: none; -webkit-user-select: none; }
+  body {
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #0f172a; color: #f8fafc;
+    transition: background .25s ease;
+  }
+  body.success { background: #15803d; }
+  body.failed  { background: #b91c1c; }
+
+  .screen { position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+            padding: 3vmin; gap: 5vmin; }
+  .screen.on { display: flex; }
+
+  /* ---- idle ---- */
+  #idle { flex-direction: column; text-align: center; gap: 2vmin; }
+  #idle .shop  { font-size: 9vmin; font-weight: 700; letter-spacing: .02em; }
+  #idle .hint  { font-size: 5vmin; color: #94a3b8; }
+  .dot { display: inline-block; width: 2.4vmin; height: 2.4vmin; border-radius: 50%; background: #22c55e;
+         margin-right: 1.6vmin; animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .25; } }
+
+  /* ---- QR ---- */
+  #qr { flex-direction: row; }
+  #qr .code { background: #fff; border-radius: 2.5vmin; padding: 1.5vmin; line-height: 0;
+              width: min(66vmin, 46vw); height: min(66vmin, 46vw); flex: none; }
+  #qr .code img { width: 100%; height: 100%; display: block; }
+  #qr .info { display: flex; flex-direction: column; gap: 2.2vmin; min-width: 0; }
+  #qr .merchant { font-size: 6vmin; color: #cbd5e1; }
+  #qr .amount   { font-size: 13vmin; font-weight: 800; line-height: 1; }
+  #qr .scan     { font-size: 4.6vmin; color: #93c5fd; }
+
+  /* ---- processing / waiting ---- */
+  #wait { flex-direction: column; text-align: center; gap: 3vmin; }
+  #wait .msg  { font-size: 8vmin; font-weight: 700; }
+  #wait .sub  { font-size: 4.6vmin; color: #94a3b8; }
+  .spinner { width: 14vmin; height: 14vmin; border-radius: 50%; border: 1.6vmin solid #334155;
+             border-top-color: #38bdf8; animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---- result ---- */
+  #result { flex-direction: column; text-align: center; gap: 2vmin; }
+  #result .icon   { font-size: 30vmin; line-height: 1; font-weight: 800; }
+  #result .title  { font-size: 10vmin; font-weight: 800; }
+  #result .amt    { font-size: 7vmin; opacity: .9; }
+
+  /* ---- connection badge ---- */
+  #net { position: fixed; right: 1.5vmin; top: 1.5vmin; font-size: 3.4vmin; color: #fbbf24; display: none; }
+  #net.on { display: block; }
+
+  /* portrait displays: stack QR above the text */
+  @media (max-aspect-ratio: 1/1) {
+    #qr { flex-direction: column; text-align: center; }
+    #qr .code { width: min(70vw, 52vh); height: min(70vw, 52vh); }
+    #qr .amount { font-size: 11vmin; }
+  }
+</style>
+</head>
+<body>
+
+<section id="idle" class="screen on">
+  <div class="shop">Fresh Mart</div>
+  <div class="hint"><span class="dot"></span>Ready for the next payment</div>
+</section>
+
+<section id="qr" class="screen">
+  <div class="code"><img id="qrimg" alt="Payment QR code"></div>
+  <div class="info">
+    <div class="merchant" id="merchant"></div>
+    <div class="amount" id="amount"></div>
+    <div class="scan">Scan with your phone to pay</div>
+  </div>
+</section>
+
+<section id="wait" class="screen">
+  <div class="spinner"></div>
+  <div class="msg" id="waitmsg">Processing…</div>
+  <div class="sub" id="waitsub"></div>
+</section>
+
+<section id="result" class="screen">
+  <div class="icon" id="icon"></div>
+  <div class="title" id="title"></div>
+  <div class="amt" id="resamt"></div>
+</section>
+
+<div id="net">⚠ reconnecting…</div>
+
+<script>
+(function () {
+  var POLL_MS = 600;
+  var RESULT_MS = 10000;                 // matches RESULT_SECONDS on the server
+  var shown = "";                        // "<id>:<status>" currently on screen
+  var dismissed = "";                    // session id the user tapped away
+  var resultTimer = null;
+
+  function $(id) { return document.getElementById(id); }
+  function inr(n) { return "\u20B9" + Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 }); }
+
+  function show(name, bodyClass) {
+    ["idle", "qr", "wait", "result"].forEach(function (s) {
+      $(s).classList.toggle("on", s === name);
+    });
+    document.body.className = bodyClass || "";
+  }
+
+  function render(s) {
+    var key = s ? s.id + ":" + s.status : "idle";
+    if (key === shown) return;
+    shown = key;
+    if (resultTimer) { clearTimeout(resultTimer); resultTimer = null; }
+
+    if (!s || s.status === "expired" || s.id === dismissed) { show("idle"); return; }
+
+    switch (s.status) {
+      case "waiting_scan":
+        $("merchant").textContent = s.merchant;
+        $("amount").textContent = inr(s.amount);
+        $("qrimg").src = "/api/demo/qr/" + s.id + ".svg";
+        show("qr");
+        break;
+      case "processing":
+        $("waitmsg").textContent = "Processing\u2026";
+        $("waitsub").textContent = "";
+        show("wait");
+        break;
+      case "awaiting_customer":              // the terminal does not know why; it only waits
+        $("waitmsg").textContent = "Waiting for customer";
+        $("waitsub").textContent = "Please confirm on your phone";
+        show("wait");
+        break;
+      case "success":
+        $("icon").textContent = "\u2713";
+        $("title").textContent = "Payment successful";
+        $("resamt").textContent = inr(s.amount);
+        show("result", "success");
+        scheduleIdle(s.id);
+        break;
+      case "failed":
+        $("icon").textContent = "\u2715";
+        $("title").textContent = "Payment failed";
+        $("resamt").textContent = inr(s.amount);
+        show("result", "failed");
+        scheduleIdle(s.id);
+        break;
+      default:
+        show("idle");
+    }
+  }
+
+  function scheduleIdle(id) {
+    resultTimer = setTimeout(function () { dismissed = id; shown = ""; render(null); }, RESULT_MS);
+  }
+
+  function poll() {
+    var ctl = new AbortController();
+    var t = setTimeout(function () { ctl.abort(); }, 2500);
+    fetch("/api/demo/current", { cache: "no-store", signal: ctl.signal })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) { $("net").classList.remove("on"); render(j.session); })
+      .catch(function () { $("net").classList.add("on"); })
+      .then(function () { clearTimeout(t); setTimeout(poll, POLL_MS); });
+  }
+
+  // tap the result screen to go back to idle early
+  document.addEventListener("click", function () {
+    if ($("result").classList.contains("on")) {
+      var id = shown.split(":")[0];
+      dismissed = id; shown = ""; render(null);
+    }
+  });
+
+  poll();
+})();
+</script>
+</body>
+</html>

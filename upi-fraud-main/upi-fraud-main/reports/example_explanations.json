@@ -1,0 +1,416 @@
+[
+ {
+  "txn_id": 567528,
+  "case": "GENUINE_festival_spike",
+  "score": 0.000886956489409374,
+  "action": "warn",
+  "amount": 76055.0,
+  "reasons": [
+   {
+    "id": "AMOUNT",
+    "weight": 2.633,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   },
+   {
+    "id": "NEW_PAYEE",
+    "weight": 0.609,
+    "text": {
+     "en": "You have never paid this person before.",
+     "ta": "இந்த நபருக்கு நீங்கள் இதுவரை பணம் செலுத்தியதில்லை.",
+     "hi": "आपने पहले कभी इस व्यक्ति को भुगतान नहीं किया है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 568339,
+  "case": "GENUINE_first_relative",
+  "score": 0.029345521683209103,
+  "action": "hold",
+  "amount": 8580.0,
+  "reasons": [
+   {
+    "id": "KNOWN_MULE",
+    "weight": 3.891,
+    "text": {
+     "en": "This account is linked to accounts already reported for fraud.",
+     "ta": "இந்தக் கணக்கு ஏற்கனவே மோசடிக்காகப் புகாரளிக்கப்பட்ட கணக்குகளுடன் தொடர்புடையது.",
+     "hi": "यह खाता पहले से धोखाधड़ी के लिए रिपोर्ट किए गए खातों से जुड़ा है।"
+    }
+   },
+   {
+    "id": "AMOUNT",
+    "weight": 2.499,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   },
+   {
+    "id": "NEW_PAYEE",
+    "weight": 0.813,
+    "text": {
+     "en": "You have never paid this person before.",
+     "ta": "இந்த நபருக்கு நீங்கள் இதுவரை பணம் செலுத்தியதில்லை.",
+     "hi": "आपने पहले कभी इस व्यक्ति को भुगतान नहीं किया है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 572837,
+  "case": "GENUINE_group_collect",
+  "score": 0.0255066371147097,
+  "action": "hold",
+  "amount": 2000.0,
+  "reasons": [
+   {
+    "id": "AMOUNT",
+    "weight": 1.788,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   },
+   {
+    "id": "NEW_PAYEE",
+    "weight": 0.418,
+    "text": {
+     "en": "You have never paid this person before.",
+     "ta": "இந்த நபருக்கு நீங்கள் இதுவரை பணம் செலுத்தியதில்லை.",
+     "hi": "आपने पहले कभी इस व्यक्ति को भुगतान नहीं किया है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 601274,
+  "case": "GENUINE_new_device",
+  "score": 0.0010584197175567088,
+  "action": "warn",
+  "amount": 1289.0,
+  "reasons": [
+   {
+    "id": "SCREEN",
+    "weight": 1.704,
+    "text": {
+     "en": "A screen-sharing or remote-access app seems to be active. Someone may be watching your phone. Stop and close it.",
+     "ta": "திரைப் பகிர்வு அல்லது ரிமோட் ஆப் செயலில் இருப்பது போல் தெரிகிறது. யாரோ உங்கள் தொலைபேசியைப் பார்க்கக்கூடும். நிறுத்தி அதை மூடுங்கள்.",
+     "hi": "स्क्रीन-शेयरिंग या रिमोट-एक्सेस ऐप चालू लगता है। कोई आपका फ़ोन देख रहा हो सकता है। इसे रोकें और बंद करें।"
+    }
+   },
+   {
+    "id": "AMOUNT",
+    "weight": 1.026,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   },
+   {
+    "id": "NEW_PAYEE",
+    "weight": 0.579,
+    "text": {
+     "en": "You have never paid this person before.",
+     "ta": "இந்த நபருக்கு நீங்கள் இதுவரை பணம் செலுத்தியதில்லை.",
+     "hi": "आपने पहले कभी इस व्यक्ति को भुगतान नहीं किया है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 585942,
+  "case": "GENUINE_travel",
+  "score": 0.0015963708536028143,
+  "action": "warn",
+  "amount": 435.0,
+  "reasons": [
+   {
+    "id": "AMOUNT",
+    "weight": 0.527,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   },
+   {
+    "id": "LOCATION",
+    "weight": 0.504,
+    "text": {
+     "en": "This payment is coming from an unusual location for you.",
+     "ta": "இந்தப் பணப்பரிவர்த்தனை உங்களுக்குப் பழக்கமில்லாத இடத்திலிருந்து நடக்கிறது.",
+     "hi": "यह भुगतान आपके लिए असामान्य जगह से हो रहा है।"
+    }
+   },
+   {
+    "id": "NEW_PAYEE",
+    "weight": 0.462,
+    "text": {
+     "en": "You have never paid this person before.",
+     "ta": "இந்த நபருக்கு நீங்கள் இதுவரை பணம் செலுத்தியதில்லை.",
+     "hi": "आपने पहले कभी इस व्यक्ति को भुगतान नहीं किया है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 648418,
+  "case": "account_takeover",
+  "score": 0.9999282723439248,
+  "action": "hold",
+  "amount": 58778.0,
+  "reasons": [
+   {
+    "id": "NEW_ACCOUNT",
+    "weight": 8.731,
+    "text": {
+     "en": "The account receiving the money is very new.",
+     "ta": "பணம் பெறும் கணக்கு மிகவும் புதியது.",
+     "hi": "पैसे पाने वाला खाता बहुत नया है।"
+    }
+   },
+   {
+    "id": "KNOWN_MULE",
+    "weight": 4.546,
+    "text": {
+     "en": "This account is linked to accounts already reported for fraud.",
+     "ta": "இந்தக் கணக்கு ஏற்கனவே மோசடிக்காகப் புகாரளிக்கப்பட்ட கணக்குகளுடன் தொடர்புடையது.",
+     "hi": "यह खाता पहले से धोखाधड़ी के लिए रिपोर्ट किए गए खातों से जुड़ा है।"
+    }
+   },
+   {
+    "id": "MULE_PATTERN",
+    "weight": 3.556,
+    "text": {
+     "en": "The receiving account is collecting money from many people and passing it on quickly, a common sign of fraud.",
+     "ta": "பணம் பெறும் கணக்கு பலரிடமிருந்து பணம் பெற்று உடனே அனுப்புகிறது; இது மோசடியின் பொதுவான அறிகுறி.",
+     "hi": "पैसे पाने वाला खाता कई लोगों से पैसे लेकर तुरंत आगे भेज रहा है, यह धोखाधड़ी का आम संकेत है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 619805,
+  "case": "fake_collect",
+  "score": 0.9998502126865016,
+  "action": "hold",
+  "amount": 11157.0,
+  "reasons": [
+   {
+    "id": "NEW_ACCOUNT",
+    "weight": 8.033,
+    "text": {
+     "en": "The account receiving the money is very new.",
+     "ta": "பணம் பெறும் கணக்கு மிகவும் புதியது.",
+     "hi": "पैसे पाने वाला खाता बहुत नया है।"
+    }
+   },
+   {
+    "id": "KNOWN_MULE",
+    "weight": 5.161,
+    "text": {
+     "en": "This account is linked to accounts already reported for fraud.",
+     "ta": "இந்தக் கணக்கு ஏற்கனவே மோசடிக்காகப் புகாரளிக்கப்பட்ட கணக்குகளுடன் தொடர்புடையது.",
+     "hi": "यह खाता पहले से धोखाधड़ी के लिए रिपोर्ट किए गए खातों से जुड़ा है।"
+    }
+   },
+   {
+    "id": "AMOUNT",
+    "weight": 1.277,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 582772,
+  "case": "mule_chain",
+  "score": 0.9998085140358159,
+  "action": "hold",
+  "amount": 35970.0,
+  "reasons": [
+   {
+    "id": "NEW_ACCOUNT",
+    "weight": 9.261,
+    "text": {
+     "en": "The account receiving the money is very new.",
+     "ta": "பணம் பெறும் கணக்கு மிகவும் புதியது.",
+     "hi": "पैसे पाने वाला खाता बहुत नया है।"
+    }
+   },
+   {
+    "id": "AMOUNT",
+    "weight": 1.781,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   },
+   {
+    "id": "NEW_PAYEE",
+    "weight": 1.051,
+    "text": {
+     "en": "You have never paid this person before.",
+     "ta": "இந்த நபருக்கு நீங்கள் இதுவரை பணம் செலுத்தியதில்லை.",
+     "hi": "आपने पहले कभी इस व्यक्ति को भुगतान नहीं किया है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 568658,
+  "case": "qr_swap",
+  "score": 0.9997769934963283,
+  "action": "hold",
+  "amount": 1491.0,
+  "reasons": [
+   {
+    "id": "QR",
+    "weight": 4.158,
+    "text": {
+     "en": "This QR code now pays a different account from this shop's usual account.",
+     "ta": "இந்த QR குறியீடு, இந்தக் கடையின் வழக்கமான கணக்குக்கு அல்லாமல் வேறு கணக்குக்குப் பணம் அனுப்புகிறது.",
+     "hi": "यह QR कोड अब इस दुकान के सामान्य खाते की जगह किसी दूसरे खाते में पैसे भेजता है।"
+    }
+   },
+   {
+    "id": "KNOWN_MULE",
+    "weight": 4.151,
+    "text": {
+     "en": "This account is linked to accounts already reported for fraud.",
+     "ta": "இந்தக் கணக்கு ஏற்கனவே மோசடிக்காகப் புகாரளிக்கப்பட்ட கணக்குகளுடன் தொடர்புடையது.",
+     "hi": "यह खाता पहले से धोखाधड़ी के लिए रिपोर्ट किए गए खातों से जुड़ा है।"
+    }
+   },
+   {
+    "id": "MULE_PATTERN",
+    "weight": 2.089,
+    "text": {
+     "en": "The receiving account is collecting money from many people and passing it on quickly, a common sign of fraud.",
+     "ta": "பணம் பெறும் கணக்கு பலரிடமிருந்து பணம் பெற்று உடனே அனுப்புகிறது; இது மோசடியின் பொதுவான அறிகுறி.",
+     "hi": "पैसे पाने वाला खाता कई लोगों से पैसे लेकर तुरंत आगे भेज रहा है, यह धोखाधड़ी का आम संकेत है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 559488,
+  "case": "rapid_new_payee",
+  "score": 0.994824492728601,
+  "action": "hold",
+  "amount": 3969.0,
+  "reasons": [
+   {
+    "id": "BURST",
+    "weight": 9.415,
+    "text": {
+     "en": "You are sending several payments to new people in a short time.",
+     "ta": "குறுகிய நேரத்தில் புதியவர்களுக்குப் பல பணப்பரிவர்த்தனைகள் செய்கிறீர்கள்.",
+     "hi": "आप थोड़े समय में नए लोगों को कई भुगतान कर रहे हैं।"
+    }
+   },
+   {
+    "id": "AMOUNT",
+    "weight": 1.847,
+    "text": {
+     "en": "The amount is much higher than you usually pay.",
+     "ta": "நீங்கள் வழக்கமாகச் செலுத்துவதை விட இந்தத் தொகை மிகவும் அதிகம்.",
+     "hi": "यह राशि आपके सामान्य भुगतान से काफ़ी ज़्यादा है।"
+    }
+   },
+   {
+    "id": "NEW_PAYEE",
+    "weight": 0.898,
+    "text": {
+     "en": "You have never paid this person before.",
+     "ta": "இந்த நபருக்கு நீங்கள் இதுவரை பணம் செலுத்தியதில்லை.",
+     "hi": "आपने पहले कभी इस व्यक्ति को भुगतान नहीं किया है।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 571826,
+  "case": "screen_share",
+  "score": 0.9999328355301353,
+  "action": "hold",
+  "amount": 10582.0,
+  "reasons": [
+   {
+    "id": "NEW_ACCOUNT",
+    "weight": 7.923,
+    "text": {
+     "en": "The account receiving the money is very new.",
+     "ta": "பணம் பெறும் கணக்கு மிகவும் புதியது.",
+     "hi": "पैसे पाने वाला खाता बहुत नया है।"
+    }
+   },
+   {
+    "id": "KNOWN_MULE",
+    "weight": 4.167,
+    "text": {
+     "en": "This account is linked to accounts already reported for fraud.",
+     "ta": "இந்தக் கணக்கு ஏற்கனவே மோசடிக்காகப் புகாரளிக்கப்பட்ட கணக்குகளுடன் தொடர்புடையது.",
+     "hi": "यह खाता पहले से धोखाधड़ी के लिए रिपोर्ट किए गए खातों से जुड़ा है।"
+    }
+   },
+   {
+    "id": "BURST",
+    "weight": 3.255,
+    "text": {
+     "en": "You are sending several payments to new people in a short time.",
+     "ta": "குறுகிய நேரத்தில் புதியவர்களுக்குப் பல பணப்பரிவர்த்தனைகள் செய்கிறீர்கள்.",
+     "hi": "आप थोड़े समय में नए लोगों को कई भुगतान कर रहे हैं।"
+    }
+   }
+  ]
+ },
+ {
+  "txn_id": 605454,
+  "case": "vishing",
+  "score": 0.9999508308639476,
+  "action": "hold",
+  "amount": 29337.0,
+  "reasons": [
+   {
+    "id": "NEW_ACCOUNT",
+    "weight": 8.549,
+    "text": {
+     "en": "The account receiving the money is very new.",
+     "ta": "பணம் பெறும் கணக்கு மிகவும் புதியது.",
+     "hi": "पैसे पाने वाला खाता बहुत नया है।"
+    }
+   },
+   {
+    "id": "KNOWN_MULE",
+    "weight": 4.562,
+    "text": {
+     "en": "This account is linked to accounts already reported for fraud.",
+     "ta": "இந்தக் கணக்கு ஏற்கனவே மோசடிக்காகப் புகாரளிக்கப்பட்ட கணக்குகளுடன் தொடர்புடையது.",
+     "hi": "यह खाता पहले से धोखाधड़ी के लिए रिपोर्ट किए गए खातों से जुड़ा है।"
+    }
+   },
+   {
+    "id": "MULE_PATTERN",
+    "weight": 3.468,
+    "text": {
+     "en": "The receiving account is collecting money from many people and passing it on quickly, a common sign of fraud.",
+     "ta": "பணம் பெறும் கணக்கு பலரிடமிருந்து பணம் பெற்று உடனே அனுப்புகிறது; இது மோசடியின் பொதுவான அறிகுறி.",
+     "hi": "पैसे पाने वाला खाता कई लोगों से पैसे लेकर तुरंत आगे भेज रहा है, यह धोखाधड़ी का आम संकेत है।"
+    }
+   }
+  ]
+ }
+]

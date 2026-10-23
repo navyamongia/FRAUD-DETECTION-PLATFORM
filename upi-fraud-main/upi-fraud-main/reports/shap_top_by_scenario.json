@@ -1,0 +1,37 @@
+{
+ "account_takeover": {
+  "recv_age_days": 5.428,
+  "recv_hops_seed": 3.452,
+  "recv_in_total": 2.361
+ },
+ "fake_collect": {
+  "recv_age_days": 5.37,
+  "recv_hops_seed": 4.385,
+  "new_payees_1h": 2.073
+ },
+ "mule_chain": {
+  "recv_age_days": 4.774,
+  "recv_in_total": 4.163,
+  "recv_in_out_ratio": 2.562
+ },
+ "qr_swap": {
+  "qr_mismatch": 5.427,
+  "recv_age_days": 4.559,
+  "recv_in_total": 2.633
+ },
+ "rapid_new_payee": {
+  "new_payees_1h": 3.444,
+  "recv_age_days": 2.389,
+  "recv_hops_seed": 2.056
+ },
+ "screen_share": {
+  "recv_age_days": 4.87,
+  "recv_hops_seed": 3.37,
+  "recv_in_total": 2.432
+ },
+ "vishing": {
+  "recv_age_days": 5.221,
+  "recv_hops_seed": 3.605,
+  "recv_in_total": 2.399
+ }
+}

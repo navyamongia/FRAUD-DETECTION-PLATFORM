@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<title>Pay</title>
+<style>
+  :root {
+    --brand: #4f46e5; --brand-d: #4338ca; --ink: #0f172a; --muted: #64748b; --line: #e2e8f0;
+    --bg: #f1f5f9; --card: #ffffff;
+    --ok: #15803d; --okbg: #dcfce7; --bad: #b91c1c; --badbg: #fee2e2;
+    --warn: #b45309; --warnbg: #fef3c7; --hold: #b91c1c; --holdbg: #fee2e2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { min-height: 100%; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Tamil", "Noto Sans Devanagari", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.4;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  #app { max-width: 460px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+  header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; }
+  .brand { font-weight: 700; color: var(--brand); font-size: 18px; }
+  .langs { display: flex; gap: 6px; }
+  .langs button { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px;
+                  padding: 6px 12px; font-size: 14px; }
+  .langs button.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+  main { flex: 1; padding: 8px 16px 28px; display: flex; flex-direction: column; }
+  .card { background: var(--card); border-radius: 20px; padding: 22px 20px; box-shadow: 0 2px 14px rgba(15,23,42,.07); }
+  .center { text-align: center; }
+
+  .avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 28px;
+            font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 4px auto 10px; }
+  .label { color: var(--muted); font-size: 15px; }
+  .merchant { font-size: 22px; font-weight: 700; margin-top: 2px; }
+  .amount { font-size: 48px; font-weight: 800; margin: 14px 0 6px; letter-spacing: -.5px; }
+  .small { font-size: 14px; color: var(--muted); }
+
+  .btn { display: block; width: 100%; border: 0; border-radius: 14px; padding: 17px; font-size: 18px; font-weight: 700;
+         margin-top: 12px; }
+  .btn.primary { background: var(--brand); color: #fff; }
+  .btn.primary:active { background: var(--brand-d); }
+  .btn.ghost { background: #fff; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn.danger { background: var(--bad); color: #fff; }
+  .btn:disabled { opacity: .45; }
+
+  .banner { border-radius: 16px; padding: 18px 16px; margin-bottom: 14px; text-align: center; }
+  .banner.warn { background: var(--warnbg); color: var(--warn); }
+  .banner.hold { background: var(--holdbg); color: var(--hold); }
+  .banner .icon { font-size: 40px; line-height: 1; }
+  .banner h2 { font-size: 20px; margin-top: 8px; line-height: 1.25; }
+  .pay-line { text-align: center; font-size: 20px; font-weight: 700; margin: 6px 0 2px; word-break: break-word; }
+  h4 { margin: 18px 0 8px; font-size: 15px; color: var(--muted); font-weight: 600; }
+  ul.why { list-style: none; }
+  ul.why li { background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px;
+              font-size: 16px; }
+
+  .otp { width: 100%; text-align: center; font-size: 36px; letter-spacing: 14px; padding: 14px 0 14px 14px;
+         border: 2px solid var(--line); border-radius: 14px; margin: 16px 0 8px; }
+  .otp:focus { outline: none; border-color: var(--brand); }
+  .err { color: var(--bad); font-size: 15px; text-align: center; margin-top: 12px; }
+
+  .result-icon { width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+                 font-size: 62px; font-weight: 800; margin: 14px auto 14px; color: #fff; }
+  .result-icon.ok { background: var(--ok); } .result-icon.bad { background: var(--bad); }
+  .result-title { font-size: 24px; font-weight: 800; }
+  .spinner { width: 54px; height: 54px; border-radius: 50%; border: 6px solid var(--line); border-top-color: var(--brand);
+             animation: spin .9s linear infinite; margin: 30px auto 16px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .langs button.mute { padding: 6px 10px; font-size: 16px; }
+  .btn.listen { background: #eef2ff; color: var(--brand); border: 1.5px solid #c7d2fe; margin: 0 0 12px; }
+  .voice-note { text-align: center; font-size: 14px; color: var(--warn); background: var(--warnbg); border-radius: 10px;
+                padding: 8px 10px; margin-bottom: 10px; }
+  .pop { animation: pop .35s ease-out; } @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">&#128737;&#65039; SafePay</div>
+    <div class="langs" id="langs"></div>
+  </header>
+  <main id="view"></main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var T = {
+    en: {
+      payTo: "Pay to", pay: "Pay", processing: "Processing…", success: "Payment successful",
+      warnTitle: "Please check before you pay", holdTitle: "We paused this payment to protect you.",
+      why: "Why we are worried", cancel: "Cancel payment", proceed: "Proceed anyway",
+      verify: "Verify", otpTitle: "Enter the 4-digit code", otpHint: "Demo code: 1234",
+      confirm: "Confirm", back: "Back",
+      cancelled: "Payment cancelled", blocked: "Payment blocked to keep you safe", failed: "Payment failed",
+      expired: "This QR code is no longer active", invalid: "This QR code is not valid",
+      closePage: "You can close this page", offline: "Cannot reach the payment server", retry: "Try again",
+      secure: "Checked for fraud before you pay",
+      listen: "Listen again", voiceOn: "Voice on", voiceOff: "Voice off",
+      voiceMissing: "This phone has no voice for the chosen language, so the warning is read in English.",
+      voiceTap: "Tap \u201cListen again\u201d to hear the warning.",
+      vWarn: ["Warning.", "Unusual transaction detected. Please check before you pay."],
+      vReason: "Reason:",
+      vAdviceWarn: "If someone asked you to send this money, or is on the phone with you, press Cancel payment.",
+      vHold: ["Stop.", "We have paused this payment to protect you. The receiver looks like a suspicious account."],
+      vAdviceHold: "Please do not continue. Press Cancel payment, or verify with your code."
+    },
+    ta: {
+      payTo: "பெறுநர்", pay: "செலுத்து",
+      processing: "செயலாக்கப்படுகிறது…",
+      success: "பணம் செலுத்தப்பட்டது",
+      warnTitle: "பணம் செலுத்தும் முன் சரிபார்க்கவும்",
+      holdTitle: "உங்களைப் பாதுகாக்க இந்தப் பரிவர்த்தனையை நிறுத்தி வைத்துள்ளோம்.",
+      why: "நாங்கள் ஏன் கவலைப்படுகிறோம்",
+      cancel: "பணம் செலுத்துவதை ரத்து செய்",
+      proceed: "இருந்தாலும் தொடரவும்",
+      verify: "சரிபார்க்கவும்",
+      otpTitle: "4 இலக்கக் குறியீட்டை உள்ளிடவும்",
+      otpHint: "டெமோ குறியீடு: 1234",
+      confirm: "உறுதிசெய்", back: "பின்செல்",
+      cancelled: "பணம் செலுத்துவது ரத்து செய்யப்பட்டது",
+      blocked: "பாதுகாப்புக்காக பணம் செலுத்துவது தடுக்கப்பட்டது",
+      failed: "பணம் செலுத்த முடியவில்லை",
+      expired: "இந்த QR குறியீடு இனி செயலில் இல்லை",
+      invalid: "இந்த QR குறியீடு செல்லாதது",
+      closePage: "இந்தப் பக்கத்தை மூடலாம்",
+      offline: "பணம் செலுத்தும் சேவையை அடைய முடியவில்லை",
+      retry: "மீண்டும் முயற்சிக்கவும்",
+      secure: "பணம் செலுத்தும் முன் மோசடி சரிபார்க்கப்படுகிறது",
+      listen: "மீண்டும் கேளுங்கள்", voiceOn: "குரல் இயக்கத்தில்", voiceOff: "குரல் நிறுத்தப்பட்டது",
+      voiceMissing: "இந்தத் தொலைபேசியில் தேர்ந்தெடுத்த மொழிக்கான குரல் இல்லை, எனவே எச்சரிக்கை ஆங்கிலத்தில் வாசிக்கப்படுகிறது.",
+      voiceTap: "எச்சரிக்கையைக் கேட்க \u201cமீண்டும் கேளுங்கள்\u201d அழுத்தவும்.",
+      vWarn: ["எச்சரிக்கை.", "இந்தப் பணப் பரிவர்த்தனை வழக்கத்திற்கு மாறாகத் தெரிகிறது. பணம் செலுத்தும் முன் சரிபார்க்கவும்."],
+      vReason: "காரணம்:",
+      vAdviceWarn: "யாராவது இந்தப் பணத்தை அனுப்பச் சொன்னாலோ, தொலைபேசியில் உங்களுடன் பேசிக்கொண்டிருந்தாலோ, \u201cபணம் செலுத்துவதை ரத்து செய்\u201d பொத்தானை அழுத்தவும்.",
+      vHold: ["நிறுத்துங்கள்.", "உங்களைப் பாதுகாக்க இந்தப் பரிவர்த்தனையை நிறுத்தி வைத்துள்ளோம். பணம் பெறும் கணக்கு சந்தேகத்திற்குரியதாகத் தெரிகிறது."],
+      vAdviceHold: "தயவுசெய்து தொடர வேண்டாம். \u201cபணம் செலுத்துவதை ரத்து செய்\u201d பொத்தானை அழுத்தவும், அல்லது உங்கள் குறியீட்டால் சரிபார்க்கவும்."
+    },
+    hi: {
+      payTo: "प्राप्तकर्ता", pay: "भुगतान करें",
+      processing: "प्रोसेस हो रहा है…", success: "भुगतान सफल",
+      warnTitle: "भुगतान से पहले कृपया जाँच लें",
+      holdTitle: "आपकी सुरक्षा के लिए हमने यह भुगतान रोक दिया है।",
+      why: "हमें चिंता क्यों है",
+      cancel: "भुगतान रद्द करें", proceed: "फिर भी आगे बढ़ें",
+      verify: "सत्यापित करें",
+      otpTitle: "4 अंकों का कोड दर्ज करें",
+      otpHint: "डेमो कोड: 1234", confirm: "पुष्टि करें", back: "वापस",
+      cancelled: "भुगतान रद्द किया गया",
+      blocked: "सुरक्षा के लिए भुगतान रोका गया",
+      failed: "भुगतान विफल",
+      expired: "यह QR कोड अब सक्रिय नहीं है",
+      invalid: "यह QR कोड मान्य नहीं है",
+      closePage: "आप यह पेज बंद कर सकते हैं",
+      offline: "भुगतान सर्वर से संपर्क नहीं हो सका",
+      retry: "फिर से प्रयास करें",
+      secure: "भुगतान से पहले धोखाधड़ी की जाँच",
+      listen: "फिर से सुनें", voiceOn: "आवाज़ चालू", voiceOff: "आवाज़ बंद",
+      voiceMissing: "इस फ़ोन में चुनी हुई भाषा की आवाज़ नहीं है, इसलिए चेतावनी अंग्रेज़ी में पढ़ी जा रही है।",
+      voiceTap: "चेतावनी सुनने के लिए \u201cफिर से सुनें\u201d दबाएँ।",
+      vWarn: ["चेतावनी।", "यह भुगतान असामान्य लग रहा है। भुगतान करने से पहले कृपया जाँच लें।"],
+      vReason: "कारण:",
+      vAdviceWarn: "अगर किसी ने आपसे यह पैसा भेजने को कहा है, या फ़ोन पर आपसे बात कर रहा है, तो \u201cभुगतान रद्द करें\u201d बटन दबाएँ।",
+      vHold: ["रुकिए।", "आपकी सुरक्षा के लिए हमने यह भुगतान रोक दिया है। पैसे पाने वाला खाता संदिग्ध लगता है।"],
+      vAdviceHold: "कृपया आगे न बढ़ें। \u201cभुगतान रद्द करें\u201d दबाएँ, या अपने कोड से सत्यापित करें।"
+    }
+  };
+  var LANGS = [["en", "English"], ["ta", "தமிழ்"], ["hi", "हिन्दी"]];
+
+  var sid = decodeURIComponent(location.pathname.split("/").filter(Boolean).pop() || "");
+    var S = { lang: "en", sess: null, busy: false, err: "", name: "", draw: null, voiceNote: "", spoken: "", reported: "" };
+  try { var saved = localStorage.getItem("lang"); if (saved && T[saved]) S.lang = saved; } catch (e) {}
+
+  // ------------------------------------------------------------------ voice (Web Speech API)
+  var synth = window.speechSynthesis;
+  var VOICE_OK = !!(synth && window.SpeechSynthesisUtterance);
+  var LOCALE = { en: "en-IN", hi: "hi-IN", ta: "ta-IN" };
+  var muted = false;
+  try { muted = localStorage.getItem("mute") === "1"; } catch (e) {}
+  if (VOICE_OK) {
+    synth.getVoices();                                   // some phones only load their voice list after this call
+    if ("onvoiceschanged" in synth) synth.onvoiceschanged = function () {};
+  }
+
+  function findVoice(code) {
+    if (!VOICE_OK) return null;
+    var want = LOCALE[code].toLowerCase(), vs = synth.getVoices() || [];
+    function norm(v) { return String(v.lang || "").toLowerCase().replace("_", "-"); }
+    return vs.filter(function (v) { return norm(v) === want; })[0] ||
+           vs.filter(function (v) { return norm(v).slice(0, 2) === want.slice(0, 2); })[0] || null;
+  }
+
+  // Phones only allow speech after a tap. Called inside the Pay tap, so the warning that arrives a moment later can talk.
+  function unlockVoice() {
+    if (!VOICE_OK) return;
+    try { var u = new window.SpeechSynthesisUtterance(" "); u.volume = 0; synth.speak(u); } catch (e) {}
+  }
+
+  function stopVoice() { if (VOICE_OK) { try { synth.cancel(); } catch (e) {} } }
+
+    // Tell the dashboard what happened to the spoken warning. "played" is sent every time (replays are counted);
+  // the other states are sent once per alert.
+  function reportVoice(status, code) {
+    if (!sid || !S.sess) return;
+    if (status !== "played") {
+      var key = status + ":" + code + ":" + S.sess.id;
+      if (S.reported === key) return;
+      S.reported = key;
+    }
+    api("/api/demo/sessions/" + sid + "/voice", { status: status, lang: code, chosen: S.lang, fallback: code !== S.lang })
+      .then(null, function () {});
+  }
+
+  function speakAlert(force) {
+    if (!S.sess) return;
+    if (!VOICE_OK) { reportVoice("unavailable", "en"); return; }
+    if (muted && !force) { reportVoice("muted", S.lang); return; }
+    var code = S.lang, voice = findVoice(code);
+    S.voiceNote = "";
+    if (!voice && code !== "en") { code = "en"; voice = findVoice("en"); S.voiceNote = "voiceMissing"; }
+    if (S.name === "alert") redraw();                    // show or clear the "no voice" note
+    var s = S.sess, hold = s.action === "hold", d = T[code];
+    var parts = (hold ? d.vHold : d.vWarn).slice();
+    var r = s.reasons && s.reasons[0];
+    if (r) parts.push(d.vReason + " " + ((r.text && (r.text[code] || r.text.en)) || ""));
+    parts.push(hold ? d.vAdviceHold : d.vAdviceWarn);
+    stopVoice();
+    setTimeout(function () {                             // a short pause after cancel() keeps Chrome from dropping the first part
+      parts.forEach(function (text, i) {
+        var u = new window.SpeechSynthesisUtterance(text);
+        u.lang = LOCALE[code];
+        if (voice) u.voice = voice;
+        u.rate = 0.9;                                    // slightly slower is easier to follow
+        if (i === 0) u.onstart = function () { reportVoice("played", code); };
+        u.onerror = function (e) {
+          if (e && e.error === "not-allowed") { S.voiceNote = "voiceTap"; redraw(); reportVoice("blocked", code); }
+        };
+        synth.speak(u);
+      });
+    }, 60);
+  }
+
+  var view = document.getElementById("view");
+  function t(k) { return T[S.lang][k] || T.en[k] || k; }
+  function inr(n) { return "\u20B9" + Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 }); }
+
+  function h(tag, cls, text) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text != null) el.textContent = text;
+    return el;
+  }
+  function btn(cls, text, onClick) {
+    var b = h("button", "btn " + cls, text);
+    b.type = "button";
+    b.disabled = S.busy;
+    b.addEventListener("click", onClick);
+    return b;
+  }
+
+  // ---------------------------------------------------------------- language bar
+  function drawLangs() {
+    var box = document.getElementById("langs");
+    box.textContent = "";
+    LANGS.forEach(function (l) {
+      var b = h("button", S.lang === l[0] ? "on" : "", l[1]);
+      b.type = "button";
+      b.addEventListener("click", function () {
+        S.lang = l[0];
+        try { localStorage.setItem("lang", l[0]); } catch (e) {}
+        drawLangs();
+        if (S.draw) { view.textContent = ""; S.draw(); }
+        if (S.name === "alert") speakAlert();
+      });
+      box.appendChild(b);
+    });
+    if (VOICE_OK) {
+      var m = h("button", "mute", muted ? "\uD83D\uDD07" : "\uD83D\uDD0A");
+      m.type = "button";
+      m.title = muted ? t("voiceOff") : t("voiceOn");
+      m.setAttribute("aria-label", m.title);
+      m.addEventListener("click", function () {
+        muted = !muted;
+        try { localStorage.setItem("mute", muted ? "1" : "0"); } catch (e) {}
+        if (muted) stopVoice();
+        drawLangs();
+        if (!muted && S.name === "alert") speakAlert();
+      });
+      box.appendChild(m);
+    }
+  }
+
+  // ------------------------------------------------------------------------ api
+  function api(path, body) {
+    var opt = body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {};
+    opt.cache = "no-store";
+    return fetch(path, opt).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) {
+          var e = new Error(typeof j.detail === "string" ? j.detail : r.status + " " + r.statusText);
+          e.status = r.status;
+          throw e;
+        }
+        return j;
+      });
+    });
+  }
+
+  function go(name, draw) {
+    if (name !== "alert") stopVoice();
+    S.name = name; S.draw = draw; S.err = ""; view.textContent = ""; draw(); window.scrollTo(0, 0);
+  }
+  function redraw() { if (S.draw) { view.textContent = ""; S.draw(); } }
+
+  // ------------------------------------------------------------------- screens
+  function screenMessage(icon, text, sub, cls) {
+    return function () {
+      var c = h("div", "card center");
+      c.appendChild(h("div", "result-icon bad", icon));
+      c.appendChild(h("div", "result-title", text));
+      if (sub) c.appendChild(h("p", "small", sub));
+      view.appendChild(c);
+    };
+  }
+
+  function drawLoading() {
+    var c = h("div", "card center");
+    c.appendChild(h("div", "spinner"));
+    view.appendChild(c);
+  }
+
+  function drawConfirm() {
+    var s = S.sess, c = h("div", "card center");
+    c.appendChild(h("div", "avatar", (s.merchant || "?").charAt(0).toUpperCase()));
+    c.appendChild(h("div", "label", t("payTo")));
+    c.appendChild(h("div", "merchant", s.merchant));
+    c.appendChild(h("div", "amount", inr(s.amount)));
+    c.appendChild(h("div", "small", "\uD83D\uDD12 " + t("secure")));
+    c.appendChild(btn("primary", t("pay") + " " + inr(s.amount), doPay));
+    if (S.err) c.appendChild(h("p", "err", S.err));
+    view.appendChild(c);
+  }
+
+  function drawProcessing() {
+    var c = h("div", "card center");
+    c.appendChild(h("div", "spinner"));
+    c.appendChild(h("div", "result-title", t("processing")));
+    view.appendChild(c);
+  }
+
+  function reasonText(r) { return (r.text && (r.text[S.lang] || r.text.en)) || r.id; }
+
+  function drawAlert() {                               // warn and hold share one layout
+    var s = S.sess, hold = s.action === "hold";
+    var wrap = h("div");
+    var b = h("div", "banner " + (hold ? "hold" : "warn"));
+    b.appendChild(h("div", "icon", hold ? "\u26D4" : "\u26A0\uFE0F"));
+    b.appendChild(h("h2", "", hold ? t("holdTitle") : t("warnTitle")));
+    wrap.appendChild(b);
+
+    if (VOICE_OK) {
+      wrap.appendChild(btn("listen", "\uD83D\uDD0A " + t("listen"), function () { speakAlert(true); }));
+      if (S.voiceNote) wrap.appendChild(h("p", "voice-note", t(S.voiceNote)));
+    }
+
+    var c = h("div", "card");
+    c.appendChild(h("div", "pay-line", inr(s.amount) + " \u2192 " + s.receiver));
+    if (s.reasons && s.reasons.length) {
+      c.appendChild(h("h4", "", t("why")));
+      var ul = h("ul", "why");
+      s.reasons.forEach(function (r) { ul.appendChild(h("li", "", reasonText(r))); });
+      c.appendChild(ul);
+    }
+    if (hold) {
+      c.appendChild(btn("primary", t("verify"), function () { go("otp", drawOtp); }));
+      c.appendChild(btn("ghost", t("cancel"), function () { doRespond("cancel"); }));
+    } else {
+      c.appendChild(btn("primary", t("cancel"), function () { doRespond("cancel"); }));
+      c.appendChild(btn("ghost", t("proceed"), function () { doRespond("proceed"); }));
+    }
+    if (S.err) c.appendChild(h("p", "err", S.err));
+    wrap.appendChild(c);
+    view.appendChild(wrap);
+  }
+
+  function drawOtp() {
+    var c = h("div", "card center");
+    c.appendChild(h("h2", "", t("otpTitle")));
+    var inp = h("input", "otp");
+    inp.type = "tel"; inp.inputMode = "numeric"; inp.maxLength = 4; inp.autocomplete = "one-time-code";
+    c.appendChild(inp);
+    c.appendChild(h("p", "small", t("otpHint")));
+    var ok = btn("primary", t("confirm"), function () { doRespond(inp.value === "1234" ? "verified" : "failed_verification"); });
+    ok.disabled = true;
+    inp.addEventListener("input", function () {
+      inp.value = inp.value.replace(/\D/g, "").slice(0, 4);
+      ok.disabled = S.busy || inp.value.length < 4;
+    });
+    c.appendChild(ok);
+    c.appendChild(btn("ghost", t("back"), function () { go("alert", drawAlert); }));
+    if (S.err) c.appendChild(h("p", "err", S.err));
+    view.appendChild(c);
+    setTimeout(function () { inp.focus(); }, 50);
+  }
+
+  function drawResult() {
+    var s = S.sess, good = s.status === "success";
+    var title = good ? t("success") : s.outcome === "cancelled" ? t("cancelled") : s.outcome === "rejected" ? t("blocked") : t("failed");
+    var c = h("div", "card center");
+    c.appendChild(h("div", "result-icon pop " + (good ? "ok" : "bad"), good ? "\u2713" : "\u2715"));
+    c.appendChild(h("div", "result-title", title));
+    c.appendChild(h("div", "amount", inr(s.amount)));
+    c.appendChild(h("p", "small", t("closePage")));
+    view.appendChild(c);
+  }
+
+  // ------------------------------------------------------------------- routing
+  function route(s) {
+    S.sess = s;
+    switch (s.status) {
+      case "waiting_scan":      return go("confirm", drawConfirm);
+      case "processing":        return go("processing", drawProcessing);
+      case "awaiting_customer":
+        go("alert", drawAlert);
+        if (S.spoken !== s.id + ":" + s.action) { S.spoken = s.id + ":" + s.action; speakAlert(); }
+        return;
+      case "success":
+      case "failed":            return go("result", drawResult);
+      case "expired":           return go("expired", expiredScreen());
+      default:                  return go("invalid", invalidScreen());
+    }
+  }
+  function expiredScreen() { return function () { screenMessage("!", t("expired"), "")(); }; }
+  function invalidScreen() { return function () { screenMessage("?", t("invalid"), "")(); }; }
+
+  function fail(e) {
+    if (e.status === 404) return go("invalid", invalidScreen());
+    if (e.status === 400 && /no longer active/i.test(e.message)) return go("expired", expiredScreen());
+    S.err = (e.status ? e.message : t("offline"));
+    if (S.draw) { view.textContent = ""; S.draw(); }
+  }
+
+  function doPay() {
+    if (S.busy) return;
+    unlockVoice();
+    S.busy = true;
+    go("processing", drawProcessing);
+    api("/api/demo/sessions/" + sid + "/pay", { lang: S.lang }).then(function (s) {
+      S.busy = false;
+      route(s);
+    }, function (e) {
+      S.busy = false;
+      go("confirm", drawConfirm);
+      fail(e);
+    });
+  }
+
+  function doRespond(resp) {
+    if (S.busy) return;
+    S.busy = true;
+    go("processing", drawProcessing);
+    api("/api/demo/sessions/" + sid + "/respond", { response: resp }).then(function (s) {
+      S.busy = false;
+      route(s);
+    }, function (e) {
+      S.busy = false;
+      go("alert", drawAlert);
+      fail(e);
+    });
+  }
+
+  // while nothing is happening, notice if the presenter replaced the QR or the payment finished elsewhere
+  setInterval(function () {
+    if (S.busy || !sid || ["result", "invalid", "expired", "otp", "loading"].indexOf(S.name) >= 0) return;
+    api("/api/demo/sessions/" + sid).then(function (s) {
+      if (s.status === "expired" || s.status === "success" || s.status === "failed") route(s);
+    }, function () {});
+  }, 2500);
+
+  // --------------------------------------------------------------------- start
+  drawLangs();
+  go("loading", drawLoading);
+  api("/api/demo/sessions/" + sid).then(route, function (e) {
+    if (e.status === 404) go("invalid", invalidScreen());
+    else go("invalid", function () { screenMessage("!", t("offline"), "")(); });
+  });
+})();
+</script>
+</body>
+</html>

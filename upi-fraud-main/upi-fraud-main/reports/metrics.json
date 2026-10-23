@@ -1,0 +1,146 @@
+{
+ "ablation": [
+  {
+   "model": "A_behavioural",
+   "PR_AUC": 0.8186,
+   "ROC_AUC": 0.9952,
+   "recall@0.1%FPR": 0.7596,
+   "recall@0.5%FPR": 0.8955,
+   "precision@0.5%FPR": 0.3695,
+   "actual_FPR@0.5%": 0.0078,
+   "recall@1%FPR": 0.9251
+  },
+  {
+   "model": "B_plus_graph",
+   "PR_AUC": 0.9677,
+   "ROC_AUC": 0.9984,
+   "recall@0.1%FPR": 0.9564,
+   "recall@0.5%FPR": 0.9756,
+   "precision@0.5%FPR": 0.41,
+   "actual_FPR@0.5%": 0.0072,
+   "recall@1%FPR": 0.9826
+  },
+  {
+   "model": "C_plus_known_mules",
+   "PR_AUC": 0.9751,
+   "ROC_AUC": 0.9964,
+   "recall@0.1%FPR": 0.9686,
+   "recall@0.5%FPR": 0.9774,
+   "precision@0.5%FPR": 0.4244,
+   "actual_FPR@0.5%": 0.0068,
+   "recall@1%FPR": 0.9826
+  }
+ ],
+ "per_scenario": [
+  {
+   "index": "account_takeover",
+   "n_txns": 54,
+   "recall_A": 1.0,
+   "recall_B": 1.0,
+   "recall_C": 1.0,
+   "incident_recall_C": 1.0
+  },
+  {
+   "index": "fake_collect",
+   "n_txns": 121,
+   "recall_A": 0.9091,
+   "recall_B": 1.0,
+   "recall_C": 1.0,
+   "incident_recall_C": 1.0
+  },
+  {
+   "index": "mule_chain",
+   "n_txns": 106,
+   "recall_A": 0.9245,
+   "recall_B": 1.0,
+   "recall_C": 1.0,
+   "incident_recall_C": 1.0
+  },
+  {
+   "index": "qr_swap",
+   "n_txns": 50,
+   "recall_A": 0.98,
+   "recall_B": 1.0,
+   "recall_C": 1.0,
+   "incident_recall_C": 1.0
+  },
+  {
+   "index": "rapid_new_payee",
+   "n_txns": 106,
+   "recall_A": 0.7264,
+   "recall_B": 0.8679,
+   "recall_C": 0.8774,
+   "incident_recall_C": 1.0
+  },
+  {
+   "index": "screen_share",
+   "n_txns": 61,
+   "recall_A": 0.9344,
+   "recall_B": 1.0,
+   "recall_C": 1.0,
+   "incident_recall_C": 1.0
+  },
+  {
+   "index": "vishing",
+   "n_txns": 76,
+   "recall_A": 0.9079,
+   "recall_B": 1.0,
+   "recall_C": 1.0,
+   "incident_recall_C": 1.0
+  }
+ ],
+ "hard_genuine": [
+  {
+   "hard": "travel",
+   "n": 634,
+   "flagged_pct": 0.631
+  },
+  {
+   "hard": "ordinary_genuine",
+   "n": 103930,
+   "flagged_pct": 1.082
+  },
+  {
+   "hard": "new_device",
+   "n": 232,
+   "flagged_pct": 3.017
+  },
+  {
+   "hard": "festival_spike",
+   "n": 6935,
+   "flagged_pct": 4.758
+  },
+  {
+   "hard": "first_relative",
+   "n": 123,
+   "flagged_pct": 13.821
+  },
+  {
+   "hard": "group_collect",
+   "n": 165,
+   "flagged_pct": 35.758
+  }
+ ],
+ "decision_layer": {
+  "warn_t": 0.0008358995047374463,
+  "hold_t": 0.01704943883654111,
+  "warn_fpr_val": 0.005,
+  "hold_fpr_val": 0.001,
+  "fraud_txns_warned_or_held_pct": 97.73519163763066,
+  "fraud_txns_held_pct": 96.86411149825784,
+  "genuine_warned_pct": 0.5615118863764184,
+  "genuine_held_pct": 0.11783715262589382,
+  "genuine_value_delayed_inr": 244518.0,
+  "victim_loss_total_inr": 1695694.0,
+  "victim_loss_prevented_inr": 1513183.2,
+  "prevented_pct": 89.23680805617052,
+  "assumption_warn_heeded": 0.5,
+  "assumption_hold_effective": 0.9
+ },
+ "latency": {
+  "predict_p50_ms": 0.2938500256277621,
+  "predict_p99_ms": 1.0491949308197914,
+  "predict_plus_shap_p50_ms": 13.602300023194402,
+  "predict_plus_shap_p99_ms": 20.16252796165645
+ }
+}

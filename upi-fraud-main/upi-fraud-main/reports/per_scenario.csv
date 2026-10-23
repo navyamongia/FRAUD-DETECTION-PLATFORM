@@ -1,0 +1,8 @@
+,n_txns,recall_A,recall_B,recall_C,incident_recall_C
+account_takeover,54,1.0,1.0,1.0,1.0
+fake_collect,121,0.9091,1.0,1.0,1.0
+mule_chain,106,0.9245,1.0,1.0,1.0
+qr_swap,50,0.98,1.0,1.0,1.0
+rapid_new_payee,106,0.7264,0.8679,0.8774,1.0
+screen_share,61,0.9344,1.0,1.0,1.0
+vishing,76,0.9079,1.0,1.0,1.0
